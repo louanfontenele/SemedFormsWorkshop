@@ -151,7 +151,7 @@ This system was built **entirely using ChatGPT o3-mini-high**, showcasing the po
 
 ## 🤝 Contact
 
-📩 **Email:** <organizacao@semed.gov.br>  
-📞 **Phone:** +55 (11) 98765-4321
+📩 **Email:**
+📞 **Phone:**
 
-Visit **[SEMED Official Website](https://www.chapadinha.semed.br)** for more information. 🌍
+Visit **[SEMED Official Website](#)** for more information. 🌍
