@@ -1,8 +1,8 @@
 # 📌 SEMED Workshops Registration System 🇧🇷
 
-![GitHub repo size](https://img.shields.io/github/repo-size/louanfontenele/SEMED-Workshops?style=flat-square)
-![GitHub contributors](https://img.shields.io/github/contributors/louanfontenele/SEMED-Workshops?color=blue&style=flat-square)
-![GitHub license](https://img.shields.io/github/license/louanfontenele/SEMED-Workshops?style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/louanfontenele/SemedFormsWorkshop?style=flat-square)
+![GitHub contributors](https://img.shields.io/github/contributors/louanfontenele/SemedFormsWorkshop?color=blue&style=flat-square)
+![GitHub license](https://img.shields.io/github/license/louanfontenele/SemedFormsWorkshop?style=flat-square)
 ![Made with ChatGPT](https://img.shields.io/badge/Made%20with-ChatGPT%20o3--mini--high-blueviolet?style=flat-square)
 
 ## 📖 About
@@ -40,8 +40,8 @@ Follow these steps to set up the project on your local machine:
 1️⃣ Clone this repository:
 
 ```sh
-git clone https://github.com/louanfontenele/SEMED-Workshops.git
-cd SEMED-Workshops
+git clone https://github.com/louanfontenele/SemedFormsWorkshop.git
+cd SemedFormsWorkshop
 ```
 
 2️⃣ Install dependencies (if needed for extensions):
