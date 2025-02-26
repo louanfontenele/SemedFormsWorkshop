@@ -117,8 +117,7 @@
     // Carrega listas e ordena
     $escolas = include 'escolas.php';
     sort($escolas, SORT_STRING | SORT_FLAG_CASE);
-    $formacoes = include 'formacoes.php';
-    sort($formacoes, SORT_STRING | SORT_FLAG_CASE);
+    // Removemos formacoes, pois não serão mais usadas.
     $areas = include 'areas.php';
 
     // Verifica data de início/fim de inscrições
@@ -196,7 +195,6 @@
         <div class="small-text">Digite apenas dígitos; a formatação será adicionada automaticamente.</div>
         
         <label for="escola">Escola de Atuação:</label>
-        <!-- Awesomplete -->
         <input class="awesomplete"
                data-minchars="0"
                data-autofirst="true"
@@ -206,16 +204,7 @@
                required>
         <div class="small-text">Selecione a escola onde você atua.</div>
         
-        <label for="formacao">Formação:</label>
-        <!-- Awesomplete -->
-        <input class="awesomplete"
-               data-minchars="0"
-               data-autofirst="true"
-               id="formacao"
-               name="formacao"
-               placeholder="Selecione sua formação"
-               required>
-        <div class="small-text">Selecione sua formação (ex.: Gestores ou Professores).</div>
+        <!-- O campo "Formação" foi removido -->
         
         <div class="buttons">
           <button type="button" onclick="prevStep()">Voltar</button>
@@ -288,10 +277,10 @@
      * ARRAYS ORIGINAIS PARA AWESOMPLETE
      ***********************************************/
     const escolasJSOriginal = <?php echo json_encode($escolas); ?>;
-    const formacoesJSOriginal = <?php echo json_encode($formacoes); ?>;
-
+    // Não usamos formacoes, campo removido.
+    
     /***********************************************
-     * FUNÇÃO DE NORMALIZAÇÃO
+     * FUNÇÃO DE NORMALIZAÇÃO PARA COMPARAÇÃO
      ***********************************************/
     function normalize(str) {
       return str
@@ -303,7 +292,6 @@
     }
 
     const escolasJS = escolasJSOriginal.map(e => normalize(e));
-    const formacoesJS = formacoesJSOriginal.map(f => normalize(f));
 
     let currentStep = 0;
     let cpfExists = false; 
@@ -350,18 +338,12 @@
           return;
         }
         let escolaVal = normalize(document.getElementById('escola').value);
-        let formacaoVal = normalize(document.getElementById('formacao').value);
         if(!escolasJS.includes(escolaVal)) {
           alert("Selecione uma escola válida da lista!");
           return;
         }
-        if(!formacoesJS.includes(formacaoVal)) {
-          alert("Selecione uma formação válida da lista!");
-          return;
-        }
         document.getElementById('nome').value = toTitleCase(document.getElementById('nome').value);
         document.getElementById('escola').value = toTitleCase(document.getElementById('escola').value);
-        document.getElementById('formacao').value = toTitleCase(document.getElementById('formacao').value);
         document.getElementById('email').value = document.getElementById('email').value.toLowerCase();
       }
       
@@ -434,7 +416,6 @@
                 <tr><td>Email</td><td>${data.email}</td></tr>
                 <tr><td>Telefone</td><td>${data.telefone}</td></tr>
                 <tr><td>Escola de Atuação</td><td>${data.escola}</td></tr>
-                <tr><td>Formação</td><td>${data.formacao}</td></tr>
                 <tr><td>Área de Atuação</td><td>${data.area_atuacao}</td></tr>
                 <tr><td>Oficina</td><td>${data.oficina_desc}</td></tr>
                 <tr><td>Escola da Oficina</td><td>${data.oficina_escola}</td></tr>
@@ -482,7 +463,6 @@
       const email = document.getElementById('email').value;
       const telefone = document.getElementById('telefone').value;
       const escola = document.getElementById('escola').value;
-      const formacao = document.getElementById('formacao').value;
       const area = document.getElementById('area_atuacao').value;
       const radio = document.querySelector('input[name="oficina"]:checked');
       const desc = radio ? radio.dataset.desc : '';
@@ -497,7 +477,6 @@
           <tr><td>Email</td><td>${email}</td></tr>
           <tr><td>Telefone</td><td>${telefone}</td></tr>
           <tr><td>Escola de Atuação</td><td>${escola}</td></tr>
-          <tr><td>Formação</td><td>${formacao}</td></tr>
           <tr><td>Área de Atuação</td><td>${area}</td></tr>
           <tr><td>Oficina</td><td>${desc}</td></tr>
           <tr><td>Escola da Oficina</td><td>${escOf}</td></tr>
@@ -643,11 +622,9 @@
     if (!!window.EventSource) {
       var source = new EventSource('sse_vagas.php');
       source.onmessage = function(e) {
-           // Quando um evento é recebido, atualizamos as oficinas
            updateOficinas();
       };
     } else {
-      // Caso não suporte SSE, fallback para polling a cada 10 segundos
       setInterval(() => {
         if(currentStep === 3) {
           const c = document.getElementById('oficinasContainer');
@@ -658,9 +635,6 @@
       }, 10000);
     }
 
-    /***********************************************
-     * AWESOMPLETE - Inicialização
-     ***********************************************/
     window.addEventListener('load', () => {
       let awEscola = new Awesomplete(document.getElementById('escola'), {
         list: <?php echo json_encode($escolas); ?>,
@@ -670,16 +644,6 @@
       });
       document.getElementById('escola').addEventListener('focus', function(){
         awEscola.evaluate();
-      });
-      
-      let awFormacao = new Awesomplete(document.getElementById('formacao'), {
-        list: <?php echo json_encode($formacoes); ?>,
-        minChars: 0,
-        autoFirst: true,
-        maxItems: 100
-      });
-      document.getElementById('formacao').addEventListener('focus', function(){
-        awFormacao.evaluate();
       });
     });
   </script>

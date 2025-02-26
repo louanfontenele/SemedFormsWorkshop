@@ -5,7 +5,7 @@ header("Content-Disposition: attachment; filename=relatorio_inscricoes.xls");
 header("Pragma: no-cache");
 header("Expires: 0");
 
-$stmt = $db->query("SELECT r.nome, r.cpf, r.email, r.telefone, r.escola, r.formacao, r.area_atuacao, 
+$stmt = $db->query("SELECT r.nome, r.cpf, r.email, r.telefone, r.escola, r.area_atuacao, 
                     o.descricao as oficina_desc, o.escola as oficina_escola, o.endereco as oficina_endereco
                     FROM registrations r
                     LEFT JOIN oficinas o ON r.oficina = o.id
@@ -32,7 +32,6 @@ $stmt = $db->query("SELECT r.nome, r.cpf, r.email, r.telefone, r.escola, r.forma
         <th>Email</th>
         <th>Telefone</th>
         <th>Escola (Usuário)</th>
-        <th>Formação</th>
         <th>Área de Atuação</th>
         <th>Oficina</th>
         <th>Escola da Oficina</th>
@@ -47,7 +46,6 @@ $stmt = $db->query("SELECT r.nome, r.cpf, r.email, r.telefone, r.escola, r.forma
         <td><?php echo htmlspecialchars($row['email']); ?></td>
         <td><?php echo htmlspecialchars($row['telefone']); ?></td>
         <td><?php echo htmlspecialchars($row['escola']); ?></td>
-        <td><?php echo htmlspecialchars($row['formacao']); ?></td>
         <td><?php echo htmlspecialchars($row['area_atuacao']); ?></td>
         <td><?php echo htmlspecialchars($row['oficina_desc']); ?></td>
         <td><?php echo htmlspecialchars($row['oficina_escola']); ?></td>

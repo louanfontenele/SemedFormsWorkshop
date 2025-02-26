@@ -30,7 +30,6 @@ if(!isset($_SESSION['admin_logged_in'])) {
             $error = "Credenciais inválidas!";
         }
     }
-    // Exibe formulário de login
     ?>
     <!DOCTYPE html>
     <html lang="pt-BR">
@@ -62,8 +61,7 @@ if(!isset($_SESSION['admin_logged_in'])) {
     exit;
 }
 
-// Se chegou aqui, está logado. Mostra o dashboard de administração.
-$stmt = $db->query("SELECT r.id, r.nome, r.cpf, r.email, r.telefone, r.escola, r.formacao, r.area_atuacao, r.oficina, o.descricao as oficina_desc FROM registrations r LEFT JOIN oficinas o ON r.oficina = o.id ORDER BY r.id ASC");
+$stmt = $db->query("SELECT r.id, r.nome, r.cpf, r.email, r.telefone, r.escola, r.area_atuacao, r.oficina, o.descricao as oficina_desc FROM registrations r LEFT JOIN oficinas o ON r.oficina = o.id ORDER BY r.id ASC");
 $registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -101,7 +99,6 @@ $registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <th>Email</th>
         <th>Telefone</th>
         <th>Escola de Atuação</th>
-        <th>Formação</th>
         <th>Área de Atuação</th>
         <th>Oficina</th>
         <th>Ações</th>
@@ -114,7 +111,6 @@ $registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <td><?php echo htmlspecialchars($reg['email']); ?></td>
         <td><?php echo htmlspecialchars($reg['telefone']); ?></td>
         <td><?php echo htmlspecialchars($reg['escola']); ?></td>
-        <td><?php echo htmlspecialchars($reg['formacao']); ?></td>
         <td><?php echo htmlspecialchars($reg['area_atuacao']); ?></td>
         <td><?php echo htmlspecialchars($reg['oficina_desc']); ?></td>
         <td class="actions">

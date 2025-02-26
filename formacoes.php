@@ -1,6 +1,8 @@
 <?php
 // formacoes.php
 return [
-  "Gestores",
-  "Professores"
+  "ARTICULADOR/MEDIADOR DA EDUCAÇÃO INTEGRAL",
+  "GESTOR",
+  "PROFESSOR",
+  "SUPERVISOR PEDAGÓGICO",
 ];

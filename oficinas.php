@@ -7,8 +7,8 @@ return [
         'vagas' => 35,
         'areas' => 'Professor(a) de Creche em Tempo Integral',
         'horas' => '16h (02 dias)',
-        'escola' => 'Secretaria Municipal de Educação de Chapadinha', 
-        'endereco' => 'Avenida Senador Vitórino Freire, 1042, Chapadinha - MA, 65500-000'
+        'escola' => 'UI Trancredo de Almeida Neves', 
+        'endereco' => 'Rua Trinta e Um de Março, 174, Chapadinha - MA, 65500-000'
     ],
     [
         'id' => 2,
@@ -16,8 +16,8 @@ return [
         'vagas' => 35,
         'areas' => 'Professora(a) de Creche em Tempo Parcial',
         'horas' => '16h (02 dias)',
-        'escola' => '',
-        'endereco' => ''
+        'escola' => 'UI Trancredo de Almeida Neves', 
+        'endereco' => 'Rua Trinta e Um de Março, 174, Chapadinha - MA, 65500-000'
     ],
     [
         'id' => 3,
@@ -25,8 +25,8 @@ return [
         'vagas' => 35,
         'areas' => 'Professora(a) de Creche em Tempo Parcial',
         'horas' => '16h (02 dias)',
-        'escola' => '', 
-        'endereco' => ''
+        'escola' => 'UI Trancredo de Almeida Neves', 
+        'endereco' => 'Rua Trinta e Um de Março, 174, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 4,
@@ -34,8 +34,8 @@ return [
       'vagas' => 35,
       'areas' => 'Professor(a) Infantil I|Professor(a) Infantil II',
       'horas' => '16h (02 dias)',
-        'escola' => '', 
-        'endereco' => ''
+        'escola' => 'UI Trancredo de Almeida Neves', 
+        'endereco' => 'Rua Trinta e Um de Março, 174, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 5,
@@ -43,8 +43,8 @@ return [
       'vagas' => 35,
       'areas' => 'Professor(a) Infantil I|Professor(a) Infantil II',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI Trancredo de Almeida Neves', 
+      'endereco' => 'Rua Trinta e Um de Março, 174, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 6,
@@ -52,8 +52,8 @@ return [
       'vagas' => 35,
       'areas' => 'Professor(a) Infantil I|Professor(a) Infantil II',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI Trancredo de Almeida Neves', 
+      'endereco' => 'Rua Trinta e Um de Março, 174, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 7,
@@ -61,8 +61,8 @@ return [
       'vagas' => 35,
       'areas' => 'Professor(a) Infantil I|Professor(a) Infantil II',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI Trancredo de Almeida Neves', 
+      'endereco' => 'Rua Trinta e Um de Março, 174, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 8,
@@ -70,8 +70,8 @@ return [
       'vagas' => 35,
       'areas' => 'Professor(a) Infantil I|Professor(a) Infantil II',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI Trancredo de Almeida Neves', 
+      'endereco' => 'Rua Trinta e Um de Março, 174, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 9,
@@ -79,8 +79,8 @@ return [
       'vagas' => 35,
       'areas' => 'Professor(a) Infantil I|Professor(a) Infantil II',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI Trancredo de Almeida Neves', 
+      'endereco' => 'Rua Trinta e Um de Março, 174, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 10,
@@ -151,8 +151,8 @@ return [
       'vagas' => 35,
       'areas' => 'Professor(a) de 1° ao 5° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI Alexandre Costa', 
+      'endereco' => 'Rua Gustavo Barbosa, 724, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 18,
@@ -160,8 +160,8 @@ return [
       'vagas' => 35,
       'areas' => 'Professor(a) de 1° ao 5° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI Alexandre Costa', 
+      'endereco' => 'Rua Gustavo Barbosa, 724, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 19,
@@ -169,8 +169,8 @@ return [
       'vagas' => 35,
       'areas' => 'Professor(a) de 1° ao 5° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI Alexandre Costa', 
+      'endereco' => 'Rua Gustavo Barbosa, 724, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 20,
@@ -178,8 +178,8 @@ return [
       'vagas' => 35,
       'areas' => 'Professor(a) de 1° ao 5° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI Alexandre Costa', 
+      'endereco' => 'Rua Gustavo Barbosa, 724, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 21,
@@ -187,8 +187,8 @@ return [
       'vagas' => 35,
       'areas' => 'Professor(a) de 1° ao 5° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI Alexandre Costa', 
+      'endereco' => 'Rua Gustavo Barbosa, 724, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 22,
@@ -196,8 +196,8 @@ return [
       'vagas' => 35,
       'areas' => 'Professor(a) de 1° ao 5° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI Alexandre Costa', 
+      'endereco' => 'Rua Gustavo Barbosa, 724, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 23,
@@ -205,8 +205,8 @@ return [
       'vagas' => 35,
       'areas' => 'Professor(a) de 1° ao 5° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI Alexandre Costa', 
+      'endereco' => 'Rua Gustavo Barbosa, 724, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 24,
@@ -214,116 +214,116 @@ return [
       'vagas' => 35,
       'areas' => 'Professor(a) de 1° ao 5° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI Alexandre Costa', 
+      'endereco' => 'Rua Gustavo Barbosa, 724, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 25,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º e 8º anos do ensino fundamental com o tema: Alfabetização Ambiental: por uma escola sustentável.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º, 8º e 9° anos do ensino fundamental com o tema: Alfabetização Ambiental: por uma escola sustentável.',
       'vagas' => 35,
       'areas' => 'Professor(a) de 6° ao 9° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI João Gomes', 
+      'endereco' => 'Avenida José Sarney, 529, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 26,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º e 8º anos do ensino fundamental com o tema: Letramento Matemático.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º, 8º e 9° anos do ensino fundamental com o tema: Letramento Matemático.',
       'vagas' => 35,
       'areas' => 'Professor(a) de 6° ao 9° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI João Gomes', 
+      'endereco' => 'Avenida José Sarney, 529, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 27,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º e 8º anos do ensino fundamental com o tema: Letramento Matemático.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º, 8º e 9° anos do ensino fundamental com o tema: Letramento Matemático.',
       'vagas' => 35,
       'areas' => 'Professor(a) de 6° ao 9° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI João Gomes', 
+      'endereco' => 'Avenida José Sarney, 529, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 28,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º e 8º anos do ensino fundamental com o tema: Leitura, produção e interpretação textual para os anos finais do ensino fundamental',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º, 8º e 9° anos do ensino fundamental com o tema: Leitura, produção e interpretação textual para os anos finais do ensino fundamental',
       'vagas' => 35,
       'areas' => 'Professor(a) de 6° ao 9° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI João Gomes', 
+      'endereco' => 'Avenida José Sarney, 529, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 29,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º e 8º anos do ensino fundamental com o tema: Leitura, produção e interpretação textual para os anos finais do ensino fundamental',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º, 8º e 9° anos do ensino fundamental com o tema: Leitura, produção e interpretação textual para os anos finais do ensino fundamental',
       'vagas' => 35,
       'areas' => 'Professor(a) de 6° ao 9° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI João Gomes', 
+      'endereco' => 'Avenida José Sarney, 529, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 30,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º e 8º anos do ensino fundamental com o tema: Autismo: conhecer para entender, acolher, promovendo práticas integradoras',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º, 8º e 9° anos do ensino fundamental com o tema: Autismo: conhecer para entender, acolher, promovendo práticas integradoras',
       'vagas' => 35,
       'areas' => 'Professor(a) de 6° ao 9° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI João Gomes', 
+      'endereco' => 'Avenida José Sarney, 529, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 31,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º e 8º anos do ensino fundamental com o tema: Reflexão sobre a prática e a reorganização do trabalho pedagógico nos anos finais do ensino fundamental',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º, 8º e 9° anos do ensino fundamental com o tema: Reflexão sobre a prática e a reorganização do trabalho pedagógico nos anos finais do ensino fundamental',
       'vagas' => 35,
       'areas' => 'Professor(a) de 6° ao 9° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI João Gomes', 
+      'endereco' => 'Avenida José Sarney, 529, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 32,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º e 8º anos do ensino fundamental com o tema: Reflexão sobre a prática e a reorganização do trabalho pedagógico nos anos finais do ensino fundamental',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º, 8º e 9° anos do ensino fundamental com o tema: Reflexão sobre a prática e a reorganização do trabalho pedagógico nos anos finais do ensino fundamental',
       'vagas' => 35,
       'areas' => 'Professor(a) de 6° ao 9° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI João Gomes', 
+      'endereco' => 'Avenida José Sarney, 529, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 33,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º e 8º anos do ensino fundamental com o tema: Avaliações externas e internas: revendo as práticas pedagógicas a partir dos resultados',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º, 8º e 9° anos do ensino fundamental com o tema: Avaliações externas e internas: revendo as práticas pedagógicas a partir dos resultados',
       'vagas' => 35,
       'areas' => 'Professor(a) de 6° ao 9° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI João Gomes', 
+      'endereco' => 'Avenida José Sarney, 529, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 34,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º e 8º anos do ensino fundamental com o tema: Avaliações externas e internas: revendo as práticas pedagógicas a partir dos resultados',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º, 8º e 9° anos do ensino fundamental com o tema: Avaliações externas e internas: revendo as práticas pedagógicas a partir dos resultados',
       'vagas' => 35,
       'areas' => 'Professor(a) de 6° ao 9° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI João Gomes', 
+      'endereco' => 'Avenida José Sarney, 529, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 35,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º e 8º anos do ensino fundamental com o tema: Avaliações externas e internas: revendo as práticas pedagógicas a partir dos resultados',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º, 8º e 9° anos do ensino fundamental com o tema: Avaliações externas e internas: revendo as práticas pedagógicas a partir dos resultados',
       'vagas' => 35,
       'areas' => 'Professor(a) de 6° ao 9° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI João Gomes', 
+      'endereco' => 'Avenida José Sarney, 529, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 36,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º e 8º anos do ensino fundamental com o tema: Competências socioemocionais: compreendendo e gerenciando as emoções para formação integral dos alunos',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º, 8º e 9° anos do ensino fundamental com o tema: Competências socioemocionais: compreendendo e gerenciando as emoções para formação integral dos alunos',
       'vagas' => 35,
       'areas' => 'Professor(a) de 6° ao 9° Ano',
       'horas' => '16h (02 dias)',
-      'escola' => '', 
-      'endereco' => ''
+      'escola' => 'UI João Gomes', 
+      'endereco' => 'Avenida José Sarney, 529, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 37,
@@ -477,6 +477,15 @@ return [
         'horas' => '16h (02 dias)',
         'escola' => '',
         'endereco' => ''
-    ]
+    ],
+    [
+      'id' => 54,
+      'descricao' => 'Formação presencial para os Pais de Alunos da Rede Pública da Educação Infantil ao 9º ano com o tema: Família e Escola uma parceria de sucesso.',
+      'vagas' => 35,
+      'areas' => 'Pais de Alunos da Rede Pública Municipal de Creche ao 9° Ano',
+      'horas' => '16h (02 dias)',
+      'escola' => '',
+      'endereco' => ''
+  ]
 ];
 ?>

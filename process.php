@@ -17,7 +17,6 @@ $cpf          = trim($_POST['cpf'] ?? '');
 $email        = strtolower(trim($_POST['email'] ?? ''));
 $telefone     = trim($_POST['telefone'] ?? '');
 $escola       = mb_convert_case(trim($_POST['escola'] ?? ''), MB_CASE_TITLE, "UTF-8");
-$formacao     = mb_convert_case(trim($_POST['formacao'] ?? ''), MB_CASE_TITLE, "UTF-8");
 $area_atuacao = trim($_POST['area_atuacao'] ?? '');
 $oficina_id   = trim($_POST['oficina'] ?? '');
 
@@ -46,25 +45,24 @@ if(!$office || $office['vagas'] <= 0) {
     die("Vagas esgotadas ou oficina inexistente.");
 }
 
-// Decrementa vaga
+// Decrementa 1 vaga
 $stmt = $db->prepare("UPDATE oficinas SET vagas = vagas - 1 WHERE id = :id AND vagas > 0");
 if(!$stmt->execute([':id' => $oficina_id])) {
     $db->rollBack();
     die("Erro ao atualizar vagas.");
 }
 
-// Salva no banco
+// Salva no banco (campo formacao removido)
 $stmt = $db->prepare("INSERT INTO registrations
-    (nome, cpf, email, telefone, escola, formacao, area_atuacao, oficina)
+    (nome, cpf, email, telefone, escola, area_atuacao, oficina)
     VALUES
-    (:nome, :cpf, :email, :telefone, :escola, :formacao, :area_atuacao, :oficina)");
+    (:nome, :cpf, :email, :telefone, :escola, :area_atuacao, :oficina)");
 $res = $stmt->execute([
     ':nome'         => $nome,
     ':cpf'          => $cpf,
     ':email'        => $email,
     ':telefone'     => $telefone,
     ':escola'       => $escola,
-    ':formacao'     => $formacao,
     ':area_atuacao' => $area_atuacao,
     ':oficina'      => $oficina_id
 ]);
@@ -124,21 +122,19 @@ if($res) {
           <li><strong>Email:</strong> <?php echo htmlspecialchars($email); ?></li>
           <li><strong>Telefone:</strong> <?php echo htmlspecialchars($telefone); ?></li>
           <li><strong>Escola de Atuação:</strong> <?php echo htmlspecialchars($escola); ?></li>
-          <li><strong>Formação:</strong> <?php echo htmlspecialchars($formacao); ?></li>
           <li><strong>Área de Atuação:</strong> <?php echo htmlspecialchars($area_atuacao); ?></li>
           <li><strong>Oficina:</strong> <?php echo htmlspecialchars($office['descricao']); ?></li>
           <li><strong>Escola da Oficina:</strong> <?php echo htmlspecialchars($office['oficina_escola']); ?></li>
           <li><strong>Endereço da Oficina:</strong> <?php echo htmlspecialchars($office['oficina_endereco']); ?></li>
         </ul>
         <?php
-          // Se existir um endereço, incorporamos Google Maps + botão para abrir no Maps
           if(!empty($office['oficina_endereco'])) {
               $encodedAddr = urlencode($office['oficina_endereco']);
               ?>
               <h3>Localização no Google Maps</h3>
               <iframe
-                width="600"
-                height="450"
+                width="400"
+                height="250"
                 style="border:0;"
                 src="https://www.google.com/maps?q=<?php echo $encodedAddr; ?>&output=embed"
                 allowfullscreen
@@ -151,6 +147,9 @@ if($res) {
           }
         ?>
         <br>
+        <p><strong>Contato:</strong><br>
+          <?php echo nl2br(htmlspecialchars($config['contact_info'])); ?>
+        </p>
         <button class="btn" onclick="window.print()">Imprimir</button>
         <button class="btn" onclick="window.location.href='index.php'">Nova Inscrição</button>
       </div>
