@@ -2,16 +2,18 @@
 require 'db.php';
 $config = include 'config.php';
 
-// Verifica se ainda está no período de inscrições
-$currentDate = date("Y-m-d H:i:s");
-if ($currentDate < $config['registration_start']) {
+date_default_timezone_set('America/Sao_Paulo');
+$currentDate = time();
+$startDate   = strtotime($config['registration_start']);
+$endDate     = strtotime($config['registration_end']);
+if ($currentDate < $startDate) {
     die("As inscrições ainda não começaram.");
 }
-if ($currentDate > $config['registration_end']) {
+if ($currentDate > $endDate) {
     die("As inscrições foram encerradas.");
 }
 
-// Recebe os dados do formulário (CPF com pontuação)
+// Recebe os dados do formulário
 $nome         = mb_convert_case(trim($_POST['nome'] ?? ''), MB_CASE_TITLE, "UTF-8");
 $cpf          = trim($_POST['cpf'] ?? '');
 $email        = strtolower(trim($_POST['email'] ?? ''));
@@ -25,139 +27,112 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // Verifica se CPF já foi cadastrado
-$stmt = $db->prepare("SELECT * FROM registrations WHERE cpf = :cpf");
+$stmt = $db->prepare("SELECT id FROM registrations WHERE cpf = :cpf");
 $stmt->execute([':cpf' => $cpf]);
 if($stmt->fetch()) {
     die("Este CPF já foi cadastrado!");
 }
 
-$db->beginTransaction();
+// Remove pontuação do CPF para imprimir via GET
+$cpfNumeric = preg_replace('/\D/', '', $cpf);
 
-// Pega dados da oficina
-$stmt = $db->prepare("SELECT descricao, vagas, escola as oficina_escola, endereco as oficina_endereco
-                      FROM oficinas
-                      WHERE id = :id");
-$stmt->execute([':id' => $oficina_id]);
-$office = $stmt->fetch(PDO::FETCH_ASSOC);
+try {
+    $db->beginTransaction();
 
-if(!$office || $office['vagas'] <= 0) {
-    $db->rollBack();
-    die("Vagas esgotadas ou oficina inexistente.");
-}
+    // Busca dados da oficina
+    $stmt = $db->prepare("SELECT descricao, vagas, escola as oficina_escola, endereco as oficina_endereco
+                          FROM oficinas
+                          WHERE id = :id");
+    $stmt->execute([':id' => $oficina_id]);
+    $office = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Decrementa 1 vaga
-$stmt = $db->prepare("UPDATE oficinas SET vagas = vagas - 1 WHERE id = :id AND vagas > 0");
-if(!$stmt->execute([':id' => $oficina_id])) {
-    $db->rollBack();
-    die("Erro ao atualizar vagas.");
-}
+    if(!$office || $office['vagas'] <= 0) {
+        $db->rollBack();
+        die("Vagas esgotadas ou oficina inexistente.");
+    }
 
-// Salva no banco (campo formacao removido)
-$stmt = $db->prepare("INSERT INTO registrations
-    (nome, cpf, email, telefone, escola, area_atuacao, oficina)
-    VALUES
-    (:nome, :cpf, :email, :telefone, :escola, :area_atuacao, :oficina)");
-$res = $stmt->execute([
-    ':nome'         => $nome,
-    ':cpf'          => $cpf,
-    ':email'        => $email,
-    ':telefone'     => $telefone,
-    ':escola'       => $escola,
-    ':area_atuacao' => $area_atuacao,
-    ':oficina'      => $oficina_id
-]);
+    // Decrementa 1 vaga
+    $stmt = $db->prepare("UPDATE oficinas SET vagas = vagas - 1 WHERE id = :id AND vagas > 0");
+    $okVagas = $stmt->execute([':id' => $oficina_id]);
+    if(!$okVagas) {
+        $db->rollBack();
+        die("Erro ao atualizar vagas.");
+    }
 
-if($res) {
+    // Insere registro
+    $stmt = $db->prepare("INSERT INTO registrations
+        (nome, cpf, email, telefone, escola, area_atuacao, oficina)
+        VALUES
+        (:nome, :cpf, :email, :telefone, :escola, :area_atuacao, :oficina)");
+    $okInsert = $stmt->execute([
+        ':nome'         => $nome,
+        ':cpf'          => $cpf,
+        ':email'        => $email,
+        ':telefone'     => $telefone,
+        ':escola'       => $escola,
+        ':area_atuacao' => $area_atuacao,
+        ':oficina'      => $oficina_id
+    ]);
+    if(!$okInsert) {
+        $db->rollBack();
+        die("Erro ao inserir dados de inscrição.");
+    }
+
     $db->commit();
-    ?>
-    <!DOCTYPE html>
-    <html lang="pt-BR">
-    <head>
-      <meta charset="UTF-8">
-      <title>Cadastro Realizado</title>
-      <style>
-        body {
-          font-family: Arial, sans-serif;
-          background: #f4f4f4;
-          margin:0; 
-          padding:0;
-        }
-        .container {
-          max-width: 800px;
-          margin: 20px auto;
-          background: #fff;
-          padding: 20px;
-          box-shadow: 0 0 10px rgba(0,0,0,0.1);
-          text-align: center;
-        }
-        ul {
-          list-style: none;
-          padding: 0;
-          text-align: left;
-          max-width: 600px;
-          margin: 0 auto;
-        }
-        .btn {
-          background: #28a745;
-          color: #fff;
-          border: none;
-          padding: 10px 20px;
-          border-radius: 5px;
-          font-size: 16px;
-          cursor: pointer;
-          margin: 10px;
-        }
-        .btn:hover {
-          background: #218838;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <h2>Cadastro Realizado com Sucesso!</h2>
-        <p>A seguir, os dados da sua inscrição:</p>
-        <ul>
-          <li><strong>Nome:</strong> <?php echo htmlspecialchars($nome); ?></li>
-          <li><strong>CPF:</strong> <?php echo htmlspecialchars($cpf); ?></li>
-          <li><strong>Email:</strong> <?php echo htmlspecialchars($email); ?></li>
-          <li><strong>Telefone:</strong> <?php echo htmlspecialchars($telefone); ?></li>
-          <li><strong>Escola de Atuação:</strong> <?php echo htmlspecialchars($escola); ?></li>
-          <li><strong>Área de Atuação:</strong> <?php echo htmlspecialchars($area_atuacao); ?></li>
-          <li><strong>Oficina:</strong> <?php echo htmlspecialchars($office['descricao']); ?></li>
-          <li><strong>Escola da Oficina:</strong> <?php echo htmlspecialchars($office['oficina_escola']); ?></li>
-          <li><strong>Endereço da Oficina:</strong> <?php echo htmlspecialchars($office['oficina_endereco']); ?></li>
-        </ul>
-        <?php
-          if(!empty($office['oficina_endereco'])) {
-              $encodedAddr = urlencode($office['oficina_endereco']);
-              ?>
-              <h3>Localização no Google Maps</h3>
-              <iframe
-                width="400"
-                height="250"
-                style="border:0;"
-                src="https://www.google.com/maps?q=<?php echo $encodedAddr; ?>&output=embed"
-                allowfullscreen
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade">
-              </iframe>
-              <br>
-              <button class="btn" onclick="window.open('https://www.google.com/maps?q=<?php echo $encodedAddr; ?>', '_blank')">Abrir no Google Maps</button>
-              <?php
-          }
-        ?>
-        <br>
-        <p><strong>Contato:</strong><br>
-          <?php echo nl2br(htmlspecialchars($config['contact_info'])); ?>
-        </p>
-        <button class="btn" onclick="window.print()">Imprimir</button>
-        <button class="btn" onclick="window.location.href='index.php'">Nova Inscrição</button>
-      </div>
-    </body>
-    </html>
-    <?php
-} else {
+} catch(Exception $e) {
     $db->rollBack();
-    echo "Erro ao realizar o cadastro.";
+    die("Erro ao processar inscrição: " . $e->getMessage());
 }
 ?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscrição Confirmada</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin:0;
+      padding:0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .btn {
+      background: #28a745;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn:hover {
+      background: #218838;
+    }
+    h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Cadastro Realizado com Sucesso!</h2>
+    <p>Sua inscrição para a <strong><?php echo nl2br(string: htmlspecialchars($config['event_name'])); ?></strong> foi confirmada.</p>
+
+    <div style="margin: 20px 0;">
+      <a class="btn" href="print_clean.php?cpf=<?php echo urlencode($cpfNumeric); ?>">Imprimir</a>
+      <a class="btn" href="index.php">Voltar ao Início</a>
+    </div>
+  </div>
+</body>
+</html>
