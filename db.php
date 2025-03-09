@@ -22,29 +22,56 @@ if ($config['db_driver'] === 'mysql') {
     }
 }
 
-// Cria a tabela de cadastros
-$db->exec("CREATE TABLE IF NOT EXISTS registrations (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT,
-    cpf TEXT UNIQUE,
-    email TEXT,
-    telefone TEXT,
-    escola TEXT,
-    formacao TEXT,
-    area_atuacao TEXT,
-    oficina INTEGER
-)");
+// Criação das tabelas com sintaxe apropriada para cada driver
+if ($config['db_driver'] === 'mysql') {
+    // Cria a tabela de cadastros no MySQL
+    $db->exec("CREATE TABLE IF NOT EXISTS registrations (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nome VARCHAR(255),
+        cpf VARCHAR(20) UNIQUE,
+        email VARCHAR(255),
+        telefone VARCHAR(20),
+        escola VARCHAR(255),
+        formacao VARCHAR(255),
+        area_atuacao VARCHAR(255),
+        oficina INT
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 
-// Cria a tabela de oficinas
-$db->exec("CREATE TABLE IF NOT EXISTS oficinas (
-    id INTEGER PRIMARY KEY,
-    descricao TEXT,
-    vagas INTEGER,
-    areas TEXT,
-    horas TEXT,
-    escola TEXT,
-    endereco TEXT
-)");
+    // Cria a tabela de oficinas no MySQL (usando a coluna 'areas')
+    $db->exec("CREATE TABLE IF NOT EXISTS oficinas (
+        id INT PRIMARY KEY,
+        descricao VARCHAR(255),
+        vagas INT,
+        areas VARCHAR(255),
+        horas VARCHAR(50),
+        escola VARCHAR(255),
+        endereco VARCHAR(255)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8");
+} else {
+    // Cria a tabela de cadastros para SQLite
+    $db->exec("CREATE TABLE IF NOT EXISTS registrations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome TEXT,
+        cpf TEXT UNIQUE,
+        email TEXT,
+        telefone TEXT,
+        escola TEXT,
+        formacao TEXT,
+        area_atuacao TEXT,
+        oficina INTEGER
+    )");
+
+    // Cria a tabela de oficinas para SQLite
+    $db->exec("CREATE TABLE IF NOT EXISTS oficinas (
+        id INTEGER PRIMARY KEY,
+        descricao TEXT,
+        vagas INTEGER,
+        areas TEXT,
+        horas TEXT,
+        escola TEXT,
+        endereco TEXT
+    )");
+}
 
 // Se a tabela de oficinas estiver vazia, insere os registros do arquivo oficinas.php
 $count = $db->query("SELECT COUNT(*) FROM oficinas")->fetchColumn();

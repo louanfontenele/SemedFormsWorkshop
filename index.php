@@ -90,7 +90,7 @@ $consultationLimit = strtotime("+1 month", $endDate);
 <body>
 <div class="container">
   <?php if(!empty($config['banner_url'])): ?>
-    <img src="<?php echo htmlspecialchars($config['banner_url']); ?>" alt="Banner" class="banner">
+    <img src="<?php echo htmlspecialchars($config['banner_url']); ?>" alt="Banner" class="banner" width="70%">
   <?php endif; ?>
 
   <h1><?php echo nl2br(string: htmlspecialchars($config['event_name'])); ?></h1>

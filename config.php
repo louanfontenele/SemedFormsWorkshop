@@ -11,13 +11,13 @@ return [
 
     // Período de inscrições
     'registration_start' => '2025-02-20 00:00:00',
-    'registration_end'   => '2025-02-19 23:59:59',
+    'registration_end'   => '2025-03-19 23:59:59',
 
     // Nome do evento
     'event_name'         => "Jornada Pedagógica 2025\nEducação Básica: cenários, desafios e possibilidades",
 
     // Banner da jornada (URL de uma imagem)
-    'banner_url'         => "https://exemplo.com/imagens/jornada_banner.jpg",
+    'banner_url'         => "JORNADA.png",
 
     // Mensagem de boas-vindas
     'welcome_message'    => "Bem-vindo(a) à nossa Jornada Pedagógica! Confira as informações abaixo para realizar sua inscrição. Após confirmar, não será possível alterar seus dados.",

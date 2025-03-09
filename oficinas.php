@@ -444,27 +444,27 @@ return [
    ],
    [
       'id' => 50,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores Responsáveis, Gestores Escolares e Assistentes de Direção com o tema: O Papel da Liderança na Gestão dos Resultados.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores Responsáveis e Gestores Escolares com o tema: O Papel da Liderança na Gestão dos Resultados.',
       'vagas' => 35,
-      'areas' => 'Professor(a) Responsáveis, Gestores Escolares e Assistentes de Direção',
+      'areas' => 'Professor(a) Responsáveis e Gestores Escolares',
       'horas' => '16h (02 dias)',
       'escola' => 'Colégio Militar Tiradentes XXIX', 
       'endereco' => ''
    ],
    [
       'id' => 51,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores Responsáveis, Gestores Escolares e Assistentes de Direção com o tema: O Papel da Liderança na Gestão dos Resultados.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores Responsáveis e Gestores Escolares com o tema: O Papel da Liderança na Gestão dos Resultados.',
       'vagas' => 35,
-      'areas' => 'Professor(a) Responsáveis, Gestores Escolares e Assistentes de Direção',
+      'areas' => 'Professor(a) Responsáveis e Gestores Escolares',
       'horas' => '16h (02 dias)',
       'escola' => 'Colégio Militar Tiradentes XXIX', 
       'endereco' => ''
    ],
    [
       'id' => 52,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores Responsáveis, Gestores Escolares e Assistentes de Direção com o tema: O Papel da Liderança na Gestão dos Resultados.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores Responsáveis e Gestores Escolares com o tema: O Papel da Liderança na Gestão dos Resultados.',
       'vagas' => 35,
-      'areas' => 'Professor(a) Responsáveis, Gestores Escolares e Assistentes de Direção',
+      'areas' => 'Professor(a) Responsáveis e Gestores Escolares',
       'horas' => '16h (02 dias)',
       'escola' => 'Colégio Militar Tiradentes XXIX', 
       'endereco' => ''
