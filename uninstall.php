@@ -9,11 +9,11 @@ error_reporting(E_ALL);
  */
 function loadEnv($file) {
     $vars = [];
-    if(file_exists($file)) {
+    if (file_exists($file)) {
         $lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        foreach($lines as $line) {
+        foreach ($lines as $line) {
             $line = trim($line);
-            if(empty($line) || $line[0] === '#' || strpos($line, '=') === false) {
+            if (empty($line) || $line[0] === '#' || strpos($line, '=') === false) {
                 continue;
             }
             list($name, $value) = explode('=', $line, 2);
@@ -25,12 +25,12 @@ function loadEnv($file) {
 $env = loadEnv('.env');
 
 // Se o admin não estiver logado, mostra formulário de login
-if(!isset($_SESSION['admin_logged_in'])) {
-    if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($_POST['password'])) {
+if (!isset($_SESSION['admin_logged_in'])) {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($_POST['password'])) {
         $username = $_POST['username'];
         $password = $_POST['password'];
-        // Verifica com as credenciais definidas no .env (ex.: ADMIN_USER e ADMIN_PASS)
-        if($username === ($env['ADMIN_USER'] ?? '') && $password === ($env['ADMIN_PASS'] ?? '')) {
+        // Verifica as credenciais definidas no .env (ADMIN_USER e ADMIN_PASS)
+        if ($username === ($env['ADMIN_USER'] ?? '') && $password === ($env['ADMIN_PASS'] ?? '')) {
             $_SESSION['admin_logged_in'] = true;
             header("Location: uninstall.php");
             exit;
@@ -56,7 +56,7 @@ if(!isset($_SESSION['admin_logged_in'])) {
     <body>
         <div class="container">
             <h2>Admin Login - Uninstall</h2>
-            <?php if(isset($error)) echo "<p class='error'>{$error}</p>"; ?>
+            <?php if (isset($error)) echo "<p class='error'>{$error}</p>"; ?>
             <form method="POST" action="uninstall.php">
                 <input type="text" name="username" placeholder="Usuário" required>
                 <input type="password" name="password" placeholder="Senha" required>
@@ -70,38 +70,37 @@ if(!isset($_SESSION['admin_logged_in'])) {
 }
 
 // Se o admin está logado, verifica se o formulário de confirmação foi enviado
-if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm']) && $_POST['confirm'] === 'yes') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm']) && $_POST['confirm'] === 'yes') {
     require 'db.php';
     $config = include 'config.php';
     
-    // Remove o arquivo de bloqueio de instalação, se existir
+    // Remove o arquivo lock-install, se existir
     $lockFile = 'lock-install';
-    if(file_exists($lockFile)) {
+    if (file_exists($lockFile)) {
         unlink($lockFile);
     }
     
-    if($config['db_driver'] === 'mysql') {
+    if ($config['db_driver'] === 'mysql') {
         try {
-            // Exclui os dados das tabelas (não deleta o banco)
-            $db->exec("DELETE FROM registrations");
-            $db->exec("DELETE FROM oficinas");
-            echo "Uninstall realizado com sucesso! Todas as inscrições foram removidas do MySQL.";
-        } catch(Exception $e) {
+            // TRUNCATE reinicia o auto_increment
+            $db->exec("TRUNCATE TABLE registrations");
+            $db->exec("TRUNCATE TABLE oficinas");
+            echo "Uninstall realizado com sucesso! Todas as inscrições foram removidas e os contadores reiniciados no MySQL.";
+        } catch (Exception $e) {
             die("Erro durante o uninstall: " . $e->getMessage());
         }
     } else {
         // Para SQLite: tenta excluir o arquivo do banco
         $db_file = __DIR__ . '/data.db';
-        if(file_exists($db_file)) {
-            if(unlink($db_file)) {
+        if (file_exists($db_file)) {
+            if (unlink($db_file)) {
                 echo "Uninstall realizado com sucesso! O arquivo do banco de dados SQLite foi removido.";
             } else {
-                // Se não conseguir remover, deleta os dados das tabelas
                 try {
                     $db->exec("DELETE FROM registrations");
                     $db->exec("DELETE FROM oficinas");
                     echo "Uninstall realizado com sucesso! Os dados do banco SQLite foram removidos.";
-                } catch(Exception $e) {
+                } catch (Exception $e) {
                     die("Erro durante o uninstall: " . $e->getMessage());
                 }
             }
@@ -129,7 +128,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm']) && $_POST['c
   <div class="container">
     <h2>Uninstall - Remover Dados do Banco</h2>
     <p><strong>Atenção:</strong> Esta ação removerá TODAS as inscrições e dados do banco.<br>
-       No MySQL, as tabelas serão esvaziadas; no SQLite, o arquivo do banco poderá ser removido.</p>
+       No MySQL, as tabelas serão truncadas (dados removidos e auto_increment reiniciado);<br>
+       No SQLite, o arquivo do banco será excluído (ou os dados serão removidos se não for possível apagar o arquivo).
+    </p>
     <form method="POST" action="uninstall.php" onsubmit="return confirm('ATENÇÃO: Esta ação removerá TODAS as inscrições! Continuar?');">
       <input type="hidden" name="confirm" value="yes">
       <button type="submit" class="btn">Remover Dados</button>
