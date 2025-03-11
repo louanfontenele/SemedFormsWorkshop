@@ -9,10 +9,24 @@ require 'db.php';
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Apaga todas as inscrições
     $db->exec("DELETE FROM registrations");
+
+    // (Opcional) Se quiser realmente resetar as vagas, adicione aqui:
+    // $db->exec("UPDATE oficinas SET vagas = [valor_original]");
+
     // Remove o arquivo de bloqueio de instalação, se existir
     if(file_exists("lock-install")) {
         unlink("lock-install");
     }
+
+    // Atualiza vagas.json para refletir a situação atual das oficinas
+    try {
+        $stmt = $db->query("SELECT id, vagas FROM oficinas");
+        $vagasSnapshot = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        file_put_contents('vagas.json', json_encode($vagasSnapshot));
+    } catch(Exception $e) {
+        error_log("Erro ao atualizar vagas.json após admin_reset: " . $e->getMessage());
+    }
+
     header("Location: admin.php");
     exit;
 }

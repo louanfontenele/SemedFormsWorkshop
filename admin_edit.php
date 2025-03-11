@@ -22,8 +22,12 @@ if(!$registration) {
 // Carrega as listas para os dropdowns
 $escolas = include 'escolas.php';
 sort($escolas, SORT_STRING | SORT_FLAG_CASE);
+
+// Se você ainda usar formacoes.php, mantenha; se não, remova.
+// Se "formação" não é mais usado, comente ou remova estas linhas.
 $formacoes = include 'formacoes.php';
 sort($formacoes, SORT_STRING | SORT_FLAG_CASE);
+
 $areas = include 'areas.php';
 
 // Carrega as oficinas (todas)
@@ -32,6 +36,7 @@ $oficinas = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
 // Processa o formulário
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Se "formacao" não for mais usado, remova esse campo daqui.
     $nome = mb_convert_case(trim($_POST['nome'] ?? ''), MB_CASE_TITLE, "UTF-8");
     $cpf = trim($_POST['cpf'] ?? '');
     $email = strtolower(trim($_POST['email'] ?? ''));
@@ -45,6 +50,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     $db->beginTransaction();
 
+    // Se mudou de oficina
     if($old_oficina_id != $nova_oficina_id) {
         // Incrementa a vaga na oficina antiga
         if($old_oficina_id) {
@@ -60,6 +66,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
     // Atualiza a inscrição
+    // Se "formacao" não existe mais, remova do SQL
     $stmt = $db->prepare("UPDATE registrations
         SET nome = :nome,
             cpf = :cpf,
@@ -77,7 +84,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         ':email' => $email,
         ':telefone' => $telefone,
         ':escola' => $escola,
-        ':formacao' => $formacao,
+        ':formacao' => $formacao, // remova se não usar
         ':area_atuacao' => $area_atuacao,
         ':oficina' => $nova_oficina_id,
         ':id' => $id
@@ -85,6 +92,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     if($res) {
         $db->commit();
+        // Atualiza o snapshot de vagas
+        try {
+            $stmtSnap = $db->query("SELECT id, vagas FROM oficinas");
+            $vagasSnapshot = $stmtSnap->fetchAll(PDO::FETCH_ASSOC);
+            file_put_contents('vagas.json', json_encode($vagasSnapshot));
+        } catch(Exception $e) {
+            error_log("Erro ao atualizar vagas.json após admin_edit: " . $e->getMessage());
+        }
+
         header("Location: admin.php");
         exit;
     } else {
@@ -135,7 +151,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
              oninput="this.value = formatPhone(this.value)">
       
       <label for="escola">Escola de Atuação:</label>
-      <!-- Awesomplete para escola -->
       <input class="awesomplete"
              id="escola"
              name="escola"
@@ -144,8 +159,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
              data-minchars="0"
              data-autofirst="true">
       
+      <!-- Se não houver mais "formacao", remova estes blocos -->
       <label for="formacao">Formação:</label>
-      <!-- Awesomplete para formação -->
       <input class="awesomplete"
              id="formacao"
              name="formacao"
@@ -165,7 +180,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       </select>
       
       <label for="oficina">Oficina:</label>
-      <!-- Dropdown com as oficinas (nome e vagas) -->
       <select id="oficina" name="oficina" required>
         <?php foreach($oficinas as $of): ?>
           <option value="<?php echo $of['id']; ?>"
@@ -183,11 +197,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
   </div>
   
   <script>
-    // Carrega arrays de escolas/formações
+    // Carrega arrays de escolas e (se ainda usado) formações
     const escolasJS = <?php echo json_encode($escolas); ?>;
+    <?php if(isset($formacoes)): ?>
     const formacoesJS = <?php echo json_encode($formacoes); ?>;
+    <?php else: ?>
+    const formacoesJS = [];
+    <?php endif; ?>
     
-    // Instancia Awesomplete para manter a experiência igual ao index.php
     window.addEventListener('load', () => {
       let awEscola = new Awesomplete(document.getElementById('escola'), {
         list: escolasJS,

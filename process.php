@@ -6,6 +6,7 @@ date_default_timezone_set('America/Sao_Paulo');
 $currentDate = time();
 $startDate   = strtotime($config['registration_start']);
 $endDate     = strtotime($config['registration_end']);
+
 if ($currentDate < $startDate) {
     die("As inscrições ainda não começaram.");
 }
@@ -26,14 +27,14 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     die("Email inválido!");
 }
 
-// Verifica se CPF já foi cadastrado
+// Verifica se o CPF já foi cadastrado
 $stmt = $db->prepare("SELECT id FROM registrations WHERE cpf = :cpf");
 $stmt->execute([':cpf' => $cpf]);
-if($stmt->fetch()) {
+if ($stmt->fetch()) {
     die("Este CPF já foi cadastrado!");
 }
 
-// Remove pontuação do CPF para imprimir via GET
+// Remove a pontuação do CPF para uso na URL
 $cpfNumeric = preg_replace('/\D/', '', $cpf);
 
 try {
@@ -46,7 +47,7 @@ try {
     $stmt->execute([':id' => $oficina_id]);
     $office = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if(!$office || $office['vagas'] <= 0) {
+    if (!$office || $office['vagas'] <= 0) {
         $db->rollBack();
         die("Vagas esgotadas ou oficina inexistente.");
     }
@@ -54,7 +55,7 @@ try {
     // Decrementa 1 vaga
     $stmt = $db->prepare("UPDATE oficinas SET vagas = vagas - 1 WHERE id = :id AND vagas > 0");
     $okVagas = $stmt->execute([':id' => $oficina_id]);
-    if(!$okVagas) {
+    if (!$okVagas) {
         $db->rollBack();
         die("Erro ao atualizar vagas.");
     }
@@ -73,12 +74,19 @@ try {
         ':area_atuacao' => $area_atuacao,
         ':oficina'      => $oficina_id
     ]);
-    if(!$okInsert) {
+    if (!$okInsert) {
         $db->rollBack();
         die("Erro ao inserir dados de inscrição.");
     }
 
+    // Commit da transação
     $db->commit();
+
+    // Atualiza o arquivo de snapshot de vagas (vagas.json)
+    $stmt = $db->query("SELECT id, vagas FROM oficinas");
+    $vagasSnapshot = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    file_put_contents('vagas.json', json_encode($vagasSnapshot));
+    
 } catch(Exception $e) {
     $db->rollBack();
     die("Erro ao processar inscrição: " . $e->getMessage());
@@ -93,8 +101,8 @@ try {
     body {
       font-family: Arial, sans-serif;
       background: #f4f4f4;
-      margin:0;
-      padding:0;
+      margin: 0;
+      padding: 0;
     }
     .container {
       max-width: 800px;
@@ -127,8 +135,7 @@ try {
 <body>
   <div class="container">
     <h2>Cadastro Realizado com Sucesso!</h2>
-    <p>Sua inscrição para a <strong><?php echo nl2br(string: htmlspecialchars($config['event_name'])); ?></strong> foi confirmada.</p>
-
+    <p>Sua inscrição para a <strong><?php echo nl2br(htmlspecialchars($config['event_name'])); ?></strong> foi confirmada.</p>
     <div style="margin: 20px 0;">
       <a class="btn" href="print_clean.php?cpf=<?php echo urlencode($cpfNumeric); ?>">Imprimir</a>
       <a class="btn" href="index.php">Voltar ao Início</a>

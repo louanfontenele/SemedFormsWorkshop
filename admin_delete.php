@@ -32,6 +32,17 @@ $stmt = $db->prepare("DELETE FROM registrations WHERE id = :id");
 $stmt->execute([':id' => $id]);
 
 $db->commit();
+
+// Atualiza o snapshot de vagas (vagas.json)
+try {
+    $stmt = $db->query("SELECT id, vagas FROM oficinas");
+    $vagasSnapshot = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    file_put_contents('vagas.json', json_encode($vagasSnapshot));
+} catch(Exception $e) {
+    // Se der erro ao atualizar vagas.json, não interrompe a deleção
+    error_log("Erro ao atualizar vagas.json após admin_delete: " . $e->getMessage());
+}
+
 header("Location: admin.php");
 exit;
 ?>
