@@ -86,7 +86,7 @@ return [
       'id' => 10,
       'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED e Professores do Ensino Regular que atuam nas turmas de Creche ao 5º ano do ensino fundamental com o tema: Alfabetização e letramento em salas multisseriadas.',
       'vagas' => 35,
-      'areas' => 'Professor(a) de Creche ao 5° Ano Multisseriado',
+      'areas' => 'Professores Responsáveis|Professor(a) de Creche ao 5° Ano Multisseriado',
       'horas' => '16h (02 dias)',
       'escola' => 'Colégio Militar Tiradentes XXIX', 
       'endereco' => ''
@@ -95,7 +95,7 @@ return [
       'id' => 11,
       'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED e Professores do Ensino Regular que atuam nas turmas de Creche ao 5º ano do ensino fundamental com o tema: Alfabetização e letramento em salas multisseriadas.',
       'vagas' => 35,
-      'areas' => 'Professor(a) de Creche ao 5° Ano Multisseriado',
+      'areas' => 'Professores Responsáveis|Professor(a) de Creche ao 5° Ano Multisseriado',
       'horas' => '16h (02 dias)',
       'escola' => 'Colégio Militar Tiradentes XXIX', 
       'endereco' => 'Colégio Militar Tiradentes XXIX'
@@ -104,7 +104,7 @@ return [
       'id' => 12,
       'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED e Professores do Ensino Regular que atuam nas turmas de Creche ao 5º ano do ensino fundamental com o tema: Avaliação da recomposição da aprendizagem: desafios e perspectivas para garantir a equidade.',
       'vagas' => 35,
-      'areas' => 'Professor(a) de Creche ao 5° Ano Multisseriado',
+      'areas' => 'Professores Responsáveis|Professor(a) de Creche ao 5° Ano Multisseriado',
       'horas' => '16h (02 dias)',
       'escola' => 'Colégio Militar Tiradentes XXIX', 
       'endereco' => ''
@@ -165,7 +165,7 @@ return [
    ],
    [
       'id' => 19,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 3º e 4º anos do ensino fundamental com o tema: Reflexão sobre a prática e a reorganização do trabalho pedagógico nos anos iniciais do ensino fundamental.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 2°, 3º, 4º e 5º anos do ensino fundamental com o tema: Reflexão sobre a prática e a reorganização do trabalho pedagógico nos anos iniciais do ensino fundamental.',
       'vagas' => 35,
       'areas' => 'Professor(a) de 1° ao 5° Ano',
       'horas' => '16h (02 dias)',
@@ -174,25 +174,25 @@ return [
    ],
    [
       'id' => 20,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 3º e 4º anos do ensino fundamental com o tema: Autismo: conhecer para entender, acolher, promovendo práticas integradoras.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 2°, 3º, 4º e 5º anos do ensino fundamental com o tema: Autismo: conhecer para entender, acolher, promovendo práticas integradoras.',
       'vagas' => 35,
-      'areas' => 'Professor(a) de 1° ao 5° Ano',
+      'areas' => 'Professor(a) de 1° ao 5° Ano|Professores/APAE',
       'horas' => '16h (02 dias)',
       'escola' => 'UI Alexandre Costa', 
       'endereco' => 'Rua Gustavo Barbosa, 724, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 21,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 3º e 4º anos do ensino fundamental com o tema: Autismo: conhecer para entender, acolher, promovendo práticas integradoras.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 2°, 3º, 4º e 5º anos do ensino fundamental com o tema: Autismo: conhecer para entender, acolher, promovendo práticas integradoras.',
       'vagas' => 35,
-      'areas' => 'Professor(a) de 1° ao 5° Ano',
+      'areas' => 'Professor(a) de 1° ao 5° Ano|Professores/APAE',
       'horas' => '16h (02 dias)',
       'escola' => 'UI Alexandre Costa', 
       'endereco' => 'Rua Gustavo Barbosa, 724, Chapadinha - MA, 65500-000'
    ],
    [
       'id' => 22,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 3º e 4º anos do ensino fundamental com o tema: O lúdico na alfabetização e letramento – língua portuguesa e matemática',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 2°, 3º, 4º e 5º anos do ensino fundamental com o tema: O lúdico na alfabetização e letramento – língua portuguesa e matemática',
       'vagas' => 35,
       'areas' => 'Professor(a) de 1° ao 5° Ano',
       'horas' => '16h (02 dias)',
@@ -201,7 +201,7 @@ return [
    ],
    [
       'id' => 23,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 3º e 4º anos do ensino fundamental com o tema: O lúdico na alfabetização e letramento – língua portuguesa e matemática',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 2°, 3º, 4º e 5º anos do ensino fundamental com o tema: O lúdico na alfabetização e letramento – língua portuguesa e matemática',
       'vagas' => 35,
       'areas' => 'Professor(a) de 1° ao 5° Ano',
       'horas' => '16h (02 dias)',
@@ -210,7 +210,7 @@ return [
    ],
    [
       'id' => 24,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 3º e 4º anos do ensino fundamental com o tema: Avaliação da recomposição da aprendizagem: desafios e perspectivas para garantir a equidade.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 2°, 3º, 4º e 5º anos do ensino fundamental com o tema: Avaliação da recomposição da aprendizagem: desafios e perspectivas para garantir a equidade.',
       'vagas' => 35,
       'areas' => 'Professor(a) de 1° ao 5° Ano',
       'horas' => '16h (02 dias)',
@@ -219,7 +219,7 @@ return [
    ],
    [
       'id' => 25,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 3º e 4º anos do ensino fundamental com o tema: Avaliação da recomposição da aprendizagem: desafios e perspectivas para garantir a equidade.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 2°, 3º, 4º e 5º anos do ensino fundamental com o tema: Avaliação da recomposição da aprendizagem: desafios e perspectivas para garantir a equidade.',
       'vagas' => 35,
       'areas' => 'Professor(a) de 1° ao 5° Ano',
       'horas' => '16h (02 dias)',
@@ -228,7 +228,7 @@ return [
    ],
    [
       'id' => 26,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 3º e 4º anos do ensino fundamental com o tema: Alfabetização Ambiental: por uma escola sustentável.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 1º, 2°, 3º, 4º e 5º anos do ensino fundamental com o tema: Alfabetização Ambiental: por uma escola sustentável.',
       'vagas' => 35,
       'areas' => 'Professor(a) de 1° ao 5° Ano',
       'horas' => '16h (02 dias)',
@@ -284,7 +284,7 @@ return [
       'id' => 32,
       'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores do Ensino Regular que atuam nas turmas dos 6º, 7º, 8º e 9° anos do ensino fundamental com o tema: Autismo: conhecer para entender, acolher, promovendo práticas integradoras',
       'vagas' => 35,
-      'areas' => 'Professor(a) de 6° ao 9° Ano',
+      'areas' => 'Professor(a) de 6° ao 9° Ano|Professores/APAE',
       'horas' => '16h (02 dias)',
       'escola' => 'UI João Gomes', 
       'endereco' => 'Avenida José Sarney, 529, Chapadinha - MA, 65500-000'
@@ -444,27 +444,27 @@ return [
    ],
    [
       'id' => 50,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores Responsáveis e Gestores Escolares com o tema: O Papel da Liderança na Gestão dos Resultados.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Gestores Escolares com o tema: O Papel da Liderança na Gestão dos Resultados.',
       'vagas' => 35,
-      'areas' => 'Professor(a) Responsáveis e Gestores Escolares',
+      'areas' => 'Gestores Escolares',
       'horas' => '16h (02 dias)',
       'escola' => 'Colégio Militar Tiradentes XXIX', 
       'endereco' => ''
    ],
    [
       'id' => 51,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores Responsáveis e Gestores Escolares com o tema: O Papel da Liderança na Gestão dos Resultados.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Gestores Escolares com o tema: O Papel da Liderança na Gestão dos Resultados.',
       'vagas' => 35,
-      'areas' => 'Professor(a) Responsáveis e Gestores Escolares',
+      'areas' => 'Gestores Escolares',
       'horas' => '16h (02 dias)',
       'escola' => 'Colégio Militar Tiradentes XXIX', 
       'endereco' => ''
    ],
    [
       'id' => 52,
-      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Professores Responsáveis e Gestores Escolares com o tema: O Papel da Liderança na Gestão dos Resultados.',
+      'descricao' => 'Formação presencial para Equipe Pedagógica da SEMED, Gestores Escolares com o tema: O Papel da Liderança na Gestão dos Resultados.',
       'vagas' => 35,
-      'areas' => 'Professor(a) Responsáveis e Gestores Escolares',
+      'areas' => 'Gestores Escolares',
       'horas' => '16h (02 dias)',
       'escola' => 'Colégio Militar Tiradentes XXIX', 
       'endereco' => ''

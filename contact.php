@@ -14,8 +14,10 @@
 <body>
   <div class="container">
     <h2>Contato</h2>
-    <p>Para entrar em contato com a equipe organizadora, envie um email para: <strong>organizacao@semed.gov.br</strong></p>
-    <p>Ou ligue para: <strong>(11) 98765-4321</strong></p>
+    <p>Para entrar em contato com a equipe organizadora, envie um whatsapp para: 
+    <p><strong>(98) 9 9231-0657</strong> — Whatsapp (Elinalva)</p>
+    <p><strong>(98) 9 8903-5895</strong> — Whatsapp (Josy)</p>
+    <p><strong>(98) 9 9166-6413</strong> — Whatsapp (Cleane Macedo)</p>
     <p><a href="javascript:history.back()" class="btn">Voltar</a></p>
   </div>
   <footer>

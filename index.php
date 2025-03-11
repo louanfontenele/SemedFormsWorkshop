@@ -107,7 +107,7 @@ $consultationLimit = strtotime("+1 month", $endDate);
     <ol>
       <li>As inscrições ocorrerão por CPF; cada participante só poderá se inscrever uma única vez;</li>
       <li>Realize sua inscrição na sua área de atuação (muito importante);</li>
-      <li>No final da inscrição, salve seu comprovante, imprima uma cópia e leve para a escola onde ocorrerá a oficina;</li>
+      <li>No final da inscrição, salve seu comprovante, imprima uma cópia e leve para o local onde ocorrerá o Credenciamento;</li>
       <li>O comprovante de inscrição contém o local de participação das oficinas (nome da escola e endereço);</li>
       <li>Em caso de dúvidas, entre em contato pelos telefones disponíveis no rodapé do comprovante de inscrição.</li>
     </ol>
@@ -128,9 +128,9 @@ $consultationLimit = strtotime("+1 month", $endDate);
       </tr>
       <tr>
         <td>Credenciamento</td>
-        <td>20/03/2025</td>
-        <td>8h</td>
-        <td>Escola da sua oficina</td>
+        <td>19/03/2025</td>
+        <td>18h</td>
+        <td>Templo Central da Assembleia de Deus</td>
       </tr>
       <tr>
         <td>Oficinas Pedagógicas (Dia 1)</td>

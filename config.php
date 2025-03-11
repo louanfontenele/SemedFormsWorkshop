@@ -10,8 +10,8 @@ return [
     'mysql_pass' => '',
 
     // Período de inscrições
-    'registration_start' => '2025-02-20 00:00:00',
-    'registration_end'   => '2025-03-19 23:59:59',
+    'registration_start' => '2025-03-10 08:00:00',
+    'registration_end'   => '2025-03-13 17:00:00',
 
     // Nome do evento
     'event_name'         => "Jornada Pedagógica 2025\nEducação Básica: cenários, desafios e possibilidades",

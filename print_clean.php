@@ -106,7 +106,7 @@ function safe($val) {
 <body>
   <div class="container">
     <?php if(!empty($config['banner_url'])): ?>
-      <center><img src="<?php echo safe($config['banner_url']); ?>" alt="Banner" class="banner"></center>
+      <center><img src="<?php echo safe($config['banner_url']); ?>" alt="Banner" class="banner" width="30%"></center>
     <?php endif; ?>
 
     <h2>Inscrição Confirmada</h2>
@@ -129,7 +129,7 @@ function safe($val) {
       <div class="map">
         <iframe
           width="100%"
-          height="200"
+          height="150"
           style="border:1px solid #ccc;"
           src="https://www.google.com/maps?q=<?php echo urlencode($registration['oficina_endereco']); ?>&output=embed"
           allowfullscreen
