@@ -3,3 +3,6 @@
 
 # Ignore .env
 .env
+
+# Ignore vagas.json
+vagas.json
