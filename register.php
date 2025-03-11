@@ -8,11 +8,11 @@ $endDate   = strtotime($config['registration_end']);
 $currentDate = time();
 
 // Se não estiver no período de inscrição, aborta
-if($currentDate < $startDate) {
-    die("As inscrições ainda não começaram. Volte em ".date("d/m/Y H:i", $startDate).".");
+if ($currentDate < $startDate) {
+    die("As inscrições ainda não começaram. Volte em " . date("d/m/Y H:i", $startDate) . ".");
 }
-if($currentDate > $endDate) {
-    die("As inscrições foram encerradas em ".date("d/m/Y H:i", $endDate).".");
+if ($currentDate > $endDate) {
+    die("As inscrições foram encerradas em " . date("d/m/Y H:i", $endDate) . ".");
 }
 
 // Carrega listas
@@ -24,12 +24,17 @@ $areas   = include 'areas.php';
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Inscrição - <?php echo nl2br(string: htmlspecialchars($config['event_name'])); ?></title>
+  <title>Inscrição - <?php echo nl2br(htmlspecialchars($config['event_name'])); ?></title>
   <!-- Awesomplete CSS/JS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/awesomplete@1.1.5/awesomplete.css">
   <script src="https://cdn.jsdelivr.net/npm/awesomplete@1.1.5/awesomplete.min.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f4; margin:0; padding:0; }
+    body { 
+      font-family: Arial, sans-serif; 
+      background: #f4f4f4; 
+      margin: 0; 
+      padding: 0; 
+    }
     .container {
       max-width: 800px;
       margin: 20px auto;
@@ -41,36 +46,63 @@ $areas   = include 'areas.php';
     label { display: block; margin: 10px 0 5px; }
     .required::after { content: " *"; color: red; }
     input, select, button {
-      width: 100%; padding: 10px; margin-bottom: 5px;
-      border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;
+      width: 100%; 
+      padding: 10px; 
+      margin-bottom: 5px;
+      border: 1px solid #ccc; 
+      border-radius: 5px; 
+      box-sizing: border-box;
     }
-    .small-text { font-size: 12px; color: #666; margin-bottom: 10px; }
-    .buttons {
-      display: flex; justify-content: space-between; margin-top: 10px;
+    .small-text { 
+      font-size: 12px; 
+      color: #666; 
+      margin-bottom: 10px; 
+    }
+    .buttons { 
+      display: flex; 
+      justify-content: space-between; 
+      margin-top: 10px; 
     }
     .step { display: none; }
     .step.active { display: block; }
     .oficina-option {
-      margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px;
+      margin: 10px 0; 
+      padding: 10px; 
+      border: 1px solid #ddd; 
+      border-radius: 5px;
     }
     .oficina-option input { margin-right: 10px; }
     .contact-wrapper { text-align: center; margin: 20px; }
     .contact-btn {
-      background: #007bff; color: #fff; padding: 8px 12px;
-      border: none; border-radius: 5px; cursor: pointer;
+      background: #007bff; 
+      color: #fff; 
+      padding: 8px 12px;
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer;
     }
     .contact-btn:hover { background: #0056b3; }
     #reviewTable {
-      width: 100%; border-collapse: collapse; margin-top: 15px;
+      width: 100%; 
+      border-collapse: collapse; 
+      margin-top: 15px;
     }
     #reviewTable th, #reviewTable td {
-      border: 1px solid #ccc; padding: 8px; text-align: left;
+      border: 1px solid #ccc; 
+      padding: 8px; 
+      text-align: left;
     }
     #reviewTable th { background-color: #007bff; color: #fff; }
     .awesomplete {
-      display: block; width: 100%; box-sizing: border-box; padding: 10px;
+      display: block; 
+      width: 100%; 
+      box-sizing: border-box; 
+      padding: 10px;
     }
-    .awesomplete ul { max-height: 150px; overflow-y: auto; }
+    .awesomplete ul { 
+      max-height: 150px; 
+      overflow-y: auto; 
+    }
   </style>
 </head>
 <body>
@@ -108,7 +140,6 @@ $areas   = include 'areas.php';
       <div class="small-text">Selecione a escola onde você atua.</div>
       
       <div class="buttons">
-        <!-- Botão "Voltar" aqui retorna ao index -->
         <button type="button" onclick="window.location.href='index.php'">Voltar</button>
         <button type="button" onclick="nextStep()">Próximo</button>
       </div>
@@ -135,7 +166,7 @@ $areas   = include 'areas.php';
     <div class="step" id="step3">
       <h2>Selecione uma Oficina</h2>
       <p>Escolha uma oficina disponível para sua área de atuação (apenas uma oficina pode ser selecionada).<br>
-      Se a oficina estiver <strong>desabilitada</strong>, as vagas se esgotaram.</p>
+         Se a oficina estiver <strong>desabilitada</strong>, as vagas se esgotaram.</p>
       <div id="oficinasContainer"></div>
       <div class="buttons">
         <button type="button" onclick="prevStep()">Voltar</button>
@@ -160,6 +191,8 @@ $areas   = include 'areas.php';
   <button class="contact-btn" onclick="window.location.href='contact.php'">Contato</button>
 </div>
 
+<?php include 'footer.php'; ?>
+
 <script>
   // Lista de escolas para Awesomplete
   const escolasJSOriginal = <?php echo json_encode($escolas); ?>;
@@ -167,9 +200,13 @@ $areas   = include 'areas.php';
   let cpfExists = false;
   const steps = document.querySelectorAll('.step');
 
-  // Normaliza strings
+  // Função para normalizar strings (removendo acentos e espaços extras)
   function normalize(str) {
-    return str.normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/\s+/g, " ").trim().toLowerCase();
+    return str.normalize("NFD")
+              .replace(/\p{Diacritic}/gu, "")
+              .replace(/\s+/g, " ")
+              .trim()
+              .toLowerCase();
   }
   const escolasJS = escolasJSOriginal.map(e => normalize(e));
 
@@ -242,7 +279,7 @@ $areas   = include 'areas.php';
       currentStep--;
       showStep(currentStep);
     } else {
-      window.location.href='index.php';
+      window.location.href = 'index.php';
     }
   }
 
@@ -284,43 +321,7 @@ $areas   = include 'areas.php';
       });
   }
 
-  // SSE ou fallback
-  function updateOficinas() {
-    const area = document.getElementById('area_atuacao').value;
-    fetch('get_oficinas.php?area=' + encodeURIComponent(area))
-      .then(r => r.json())
-      .then(data => {
-        data.forEach(of => {
-          let radio = document.getElementById('oficina_' + of.id);
-          if(radio) {
-            let label = document.querySelector('label[for="oficina_' + of.id + '"]');
-            if(label) {
-              label.innerHTML = `${of.descricao} - ${of.vagas} Vagas - ${of.horas}`;
-              radio.disabled = (of.vagas <= 0);
-              radio.dataset.escola = of.escola || '';
-              radio.dataset.endereco = of.endereco || '';
-            }
-          }
-        });
-      })
-      .catch(err => console.error(err));
-  }
-
-  if (!!window.EventSource) {
-    let source = new EventSource('sse_vagas.php');
-    source.onmessage = function(e) {
-      if(currentStep === 2) {
-        updateOficinas();
-      }
-    };
-  } else {
-    setInterval(() => {
-      if(currentStep === 2) {
-        updateOficinas();
-      }
-    }, 10000);
-  }
-
+  // Como optamos por não utilizar atualização em tempo real constante, as vagas serão atualizadas quando o usuário avançar para a etapa 3.
   function populateReview() {
     const nome = document.getElementById('nome').value;
     const cpf = document.getElementById('cpf').value;
@@ -332,7 +333,6 @@ $areas   = include 'areas.php';
     const desc = radio ? radio.dataset.desc : '';
     const escOf = radio ? radio.dataset.escola : '';
     const endOf = radio ? radio.dataset.endereco : '';
-
     let html = `
       <table id="reviewTable">
         <tr><th>Campo</th><th>Valor</th></tr>
@@ -374,12 +374,12 @@ $areas   = include 'areas.php';
     if(cpf.length !== 11) return false;
     if(/^(\d)\1+$/.test(cpf)) return false;
     let add = 0;
-    for(let i=0; i<9; i++) add += parseInt(cpf.charAt(i)) * (10 - i);
+    for(let i = 0; i < 9; i++) add += parseInt(cpf.charAt(i)) * (10 - i);
     let rev = 11 - (add % 11);
     if(rev === 10 || rev === 11) rev = 0;
     if(rev !== parseInt(cpf.charAt(9))) return false;
     add = 0;
-    for(let i=0; i<10; i++) add += parseInt(cpf.charAt(i)) * (11 - i);
+    for(let i = 0; i < 10; i++) add += parseInt(cpf.charAt(i)) * (11 - i);
     rev = 11 - (add % 11);
     if(rev === 10 || rev === 11) rev = 0;
     if(rev !== parseInt(cpf.charAt(10))) return false;
@@ -387,8 +387,8 @@ $areas   = include 'areas.php';
   }
 
   function formatCPF(value) {
-    let v = value.replace(/\D/g,'');
-    if(v.length > 11) v = v.slice(0,11);
+    let v = value.replace(/\D/g, '');
+    if(v.length > 11) v = v.slice(0, 11);
     if(v.length >= 4 && v.length < 7) {
       return v.replace(/(\d{3})(\d+)/, "$1.$2");
     } else if(v.length >= 7 && v.length < 11) {
@@ -400,16 +400,16 @@ $areas   = include 'areas.php';
   }
 
   function formatPhone(value) {
-    let v = value.replace(/\D/g,'');
-    if(v.length > 11) v = v.slice(0,11);
+    let v = value.replace(/\D/g, '');
+    if(v.length > 11) v = v.slice(0, 11);
     if(v.length >= 1 && v.length < 3) {
       return "(" + v;
     } else if(v.length >= 3 && v.length < 4) {
-      return "(" + v.slice(0,2) + ") " + v.slice(2);
+      return "(" + v.slice(0, 2) + ") " + v.slice(2);
     } else if(v.length >= 4 && v.length < 8) {
-      return "(" + v.slice(0,2) + ") " + v.slice(2,3) + " " + v.slice(3);
+      return "(" + v.slice(0, 2) + ") " + v.slice(2, 3) + " " + v.slice(3);
     } else if(v.length >= 8) {
-      return "(" + v.slice(0,2) + ") " + v.slice(2,3) + " " + v.slice(3,7) + "-" + v.slice(7);
+      return "(" + v.slice(0, 2) + ") " + v.slice(2, 3) + " " + v.slice(3, 7) + "-" + v.slice(7);
     }
     return v;
   }
@@ -421,7 +421,7 @@ $areas   = include 'areas.php';
   }
 
   window.addEventListener('load', () => {
-    // Awesomplete
+    // Awesomplete para o campo de escola
     let awEscola = new Awesomplete(document.getElementById('escola'), {
       list: <?php echo json_encode($escolas); ?>,
       minChars: 0,

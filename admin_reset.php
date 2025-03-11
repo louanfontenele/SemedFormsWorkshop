@@ -10,8 +10,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Apaga todas as inscrições
     $db->exec("DELETE FROM registrations");
 
-    // (Opcional) Se quiser realmente resetar as vagas, adicione aqui:
-    // $db->exec("UPDATE oficinas SET vagas = [valor_original]");
+    // Se desejar resetar as vagas para seus valores originais, adicione aqui um UPDATE para cada oficina.
+    // Exemplo: $db->exec("UPDATE oficinas SET vagas = 35");
 
     // Remove o arquivo de bloqueio de instalação, se existir
     if(file_exists("lock-install")) {
