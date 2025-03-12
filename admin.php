@@ -63,6 +63,9 @@ if(!isset($_SESSION['admin_logged_in'])) {
 
 $stmt = $db->query("SELECT r.id, r.nome, r.cpf, r.email, r.telefone, r.escola, r.area_atuacao, r.oficina, o.descricao as oficina_desc FROM registrations r LEFT JOIN oficinas o ON r.oficina = o.id ORDER BY r.id ASC");
 $registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Conta o total de inscrições existentes no banco
+$totalRegistrations = count($registrations);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -73,6 +76,7 @@ $registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <style>
     body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
     .container { max-width: 1000px; margin: 20px auto; background: #fff; padding: 20px; }
+    .total-count { margin-bottom: 15px; font-size: 16px; font-weight: bold; }
     table { width: 100%; border-collapse: collapse; }
     th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
     th { background: #007bff; color: #fff; }
@@ -89,6 +93,9 @@ $registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <a href="index.php">Nova Inscrição</a>
       <a href="admin_reset.php" onclick="return confirm('ATENÇÃO: Ao resetar, todas as inscrições serão apagadas! Continuar?');">Resetar Banco</a>
       <a href="admin_logout.php">Logout</a>
+    </div>
+    <div class="total-count">
+      Total de Inscrições: <?php echo $totalRegistrations; ?>
     </div>
     <h2>Lista de Inscrições</h2>
     <table>
