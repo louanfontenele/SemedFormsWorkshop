@@ -37,15 +37,17 @@ if ($config['db_driver'] === 'mysql') {
         oficina INT
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 
-    // Cria a tabela de oficinas no MySQL (usando a coluna 'areas')
+    // Cria a tabela de oficinas no MySQL com a coluna 'identificador'
+    // Aqui alteramos a coluna 'areas' para TEXT
     $db->exec("CREATE TABLE IF NOT EXISTS oficinas (
         id INT PRIMARY KEY,
-        descricao VARCHAR(255),
+        descricao TEXT,
         vagas INT,
-        areas VARCHAR(255),
+        areas TEXT,
         horas VARCHAR(50),
         escola VARCHAR(255),
-        endereco VARCHAR(255)
+        endereco VARCHAR(255),
+        identificador INT DEFAULT 0
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 } else {
     // Cria a tabela de cadastros para SQLite
@@ -56,12 +58,12 @@ if ($config['db_driver'] === 'mysql') {
         email TEXT,
         telefone TEXT,
         escola TEXT,
-        formacao TEXT,
         area_atuacao TEXT,
         oficina INTEGER
     )");
 
-    // Cria a tabela de oficinas para SQLite
+    // Cria a tabela de oficinas para SQLite com a coluna 'identificador'
+    // No SQLite usamos TEXT também para áreas
     $db->exec("CREATE TABLE IF NOT EXISTS oficinas (
         id INTEGER PRIMARY KEY,
         descricao TEXT,
@@ -69,7 +71,8 @@ if ($config['db_driver'] === 'mysql') {
         areas TEXT,
         horas TEXT,
         escola TEXT,
-        endereco TEXT
+        endereco TEXT,
+        identificador INTEGER DEFAULT 0
     )");
 }
 
@@ -77,8 +80,8 @@ if ($config['db_driver'] === 'mysql') {
 $count = $db->query("SELECT COUNT(*) FROM oficinas")->fetchColumn();
 if ($count == 0) {
     $oficinas = include 'oficinas.php';
-    $stmt = $db->prepare("INSERT INTO oficinas (id, descricao, vagas, areas, horas, escola, endereco) 
-                          VALUES (:id, :descricao, :vagas, :areas, :horas, :escola, :endereco)");
+    $stmt = $db->prepare("INSERT INTO oficinas (id, descricao, vagas, areas, horas, escola, endereco, identificador) 
+                          VALUES (:id, :descricao, :vagas, :areas, :horas, :escola, :endereco, :identificador)");
     foreach ($oficinas as $oficina) {
         $stmt->execute([
             ':id' => $oficina['id'],
@@ -87,7 +90,8 @@ if ($count == 0) {
             ':areas' => $oficina['areas'],
             ':horas' => $oficina['horas'],
             ':escola' => $oficina['escola'],
-            ':endereco' => $oficina['endereco']
+            ':endereco' => $oficina['endereco'],
+            ':identificador' => $oficina['id'] // Usa o ID do arquivo como identificador
         ]);
     }
 }

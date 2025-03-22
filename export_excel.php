@@ -5,8 +5,18 @@ header("Content-Disposition: attachment; filename=relatorio_inscricoes.xls");
 header("Pragma: no-cache");
 header("Expires: 0");
 
-$stmt = $db->query("SELECT r.nome, r.cpf, r.email, r.telefone, r.escola, r.area_atuacao, 
-                    o.descricao as oficina_desc, o.escola as oficina_escola, o.endereco as oficina_endereco
+// Atualizamos a query para buscar também o campo "identificador" da tabela oficinas
+$stmt = $db->query("SELECT 
+                        r.nome, 
+                        r.cpf, 
+                        r.email, 
+                        r.telefone, 
+                        r.escola, 
+                        r.area_atuacao, 
+                        o.descricao as oficina_desc, 
+                        o.escola as oficina_escola, 
+                        o.endereco as oficina_endereco,
+                        o.identificador as oficina_identificador
                     FROM registrations r
                     LEFT JOIN oficinas o ON r.oficina = o.id
                     ORDER BY r.id ASC");
@@ -34,6 +44,7 @@ $stmt = $db->query("SELECT r.nome, r.cpf, r.email, r.telefone, r.escola, r.area_
         <th>Escola (Usuário)</th>
         <th>Área de Atuação</th>
         <th>Oficina</th>
+        <th>Identificador</th>
         <th>Escola da Oficina</th>
         <th>Endereço da Oficina</th>
       </tr>
@@ -48,6 +59,7 @@ $stmt = $db->query("SELECT r.nome, r.cpf, r.email, r.telefone, r.escola, r.area_
         <td><?php echo htmlspecialchars($row['escola']); ?></td>
         <td><?php echo htmlspecialchars($row['area_atuacao']); ?></td>
         <td><?php echo htmlspecialchars($row['oficina_desc']); ?></td>
+        <td><?php echo htmlspecialchars($row['oficina_identificador']); ?></td>
         <td><?php echo htmlspecialchars($row['oficina_escola']); ?></td>
         <td><?php echo htmlspecialchars($row['oficina_endereco']); ?></td>
       </tr>

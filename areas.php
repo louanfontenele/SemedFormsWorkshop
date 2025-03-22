@@ -19,6 +19,7 @@ return [
   "Gestores Escolares",
   "Supervisores Escolares",
   "Professor(a) da EJA",
+  "Equipe Multi Profissionais",
   "Pais de Alunos da Rede Pública Municipal de Creche ao 9° Ano"
 ];
 ?>

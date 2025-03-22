@@ -20,25 +20,25 @@ try {
         // Cria as tabelas no MySQL – utilizando a coluna 'areas'
         $db->exec("CREATE TABLE IF NOT EXISTS registrations (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            nome VARCHAR(255),
-            cpf VARCHAR(20) UNIQUE,
-            email VARCHAR(255),
-            telefone VARCHAR(20),
-            email VARCHAR(255),
-            escola VARCHAR(255),
-            formacao VARCHAR(255),
-            area_atuacao VARCHAR(255),
+            nome TEXT,
+            cpf TEXT UNIQUE,
+            email TEXT,
+            telefone TEXT,
+            email TEXT,
+            escola TEXT,
+            formacao TEXT,
+            area_atuacao TEXT,
             oficina INT
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 
         $db->exec("CREATE TABLE IF NOT EXISTS oficinas (
             id INT PRIMARY KEY,
-            descricao VARCHAR(255),
+            descricao TEXT,
             vagas INT,
-            areas VARCHAR(255),
+            areas TEXT,
             horas VARCHAR(50),
-            escola VARCHAR(255),
-            endereco VARCHAR(255)
+            escola TEXT,
+            endereco TEXT
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8");
     } else {
         // Cria as tabelas no SQLite

@@ -1,7 +1,14 @@
 <?php
-// oficinas.html (ou oficinas.php)
+// veroficinas.php
 $config = include 'config.php';
-$areas   = include 'areas.php';
+$areas = include 'areas.php';
+require 'db.php';
+
+// Calcula os totais globais
+$totalRegistrations = $db->query("SELECT COUNT(*) FROM registrations")->fetchColumn();
+$totalVagasRestantes = $db->query("SELECT SUM(vagas) FROM oficinas")->fetchColumn();
+// Como não utilizamos a coluna total_vagas para o total global, definimos:
+$totalVagasTotais = $totalRegistrations + $totalVagasRestantes;
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -40,7 +47,6 @@ $areas   = include 'areas.php';
       box-sizing: border-box;
     }
     .oficina-item {
-      border: 1px solid #ddd;
       padding: 10px;
       margin-bottom: 10px;
       border-radius: 5px;
@@ -62,39 +68,79 @@ $areas   = include 'areas.php';
     .btn:hover {
       background: #0056b3;
     }
+    .totals {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+    }
   </style>
   <script>
     function loadOficinasConsulta() {
       var area = document.getElementById('area_atuacao').value;
       var container = document.getElementById('oficinasContainer');
       container.innerHTML = 'Carregando oficinas...';
-      fetch('get_oficinas.php?area=' + encodeURIComponent(area))
-        .then(response => response.json())
-        .then(data => {
-          if (!data || data.length === 0) {
-            container.innerHTML = '<p>Nenhuma oficina encontrada para esta área.</p>';
-            return;
+      
+      // Realiza duas requisições: uma para obter os dados das oficinas e outra para o snapshot de vagas
+      Promise.all([
+          fetch('get_oficinas.php?area=' + encodeURIComponent(area)).then(response => response.json()),
+          fetch('vagas.json').then(response => response.json())
+      ])
+      .then(function(results) {
+          var oficinasData = results[0];
+          var vagasData = results[1];
+          
+          // Cria um mapa de vagas restantes: chave = id da oficina, valor = vagas restantes
+          var vagasMap = {};
+          vagasData.forEach(function(item) {
+              vagasMap[item.id] = item.vagas;
+          });
+          
+          if (!oficinasData || oficinasData.length === 0) {
+              container.innerHTML = '<p>Nenhuma oficina encontrada para esta área.</p>';
+              return;
           }
-          let html = '';
-          data.forEach(function(of) {
-            // Exibe apenas a descrição, horário, escola e endereço (sem as vagas)
-            html += '<div class="oficina-item">';
-            html += '<strong>' + of.descricao + '</strong><br>';
-            html += 'Horário: ' + of.horas + '<br>';
-            if (of.escola) {
-              html += 'Escola: ' + of.escola + '<br>';
-            }
-            if (of.endereco) {
-              html += 'Endereço: ' + of.endereco + '<br>';
-            }
-            html += '</div>';
+          
+          var html = '';
+          oficinasData.forEach(function(of) {
+              // Usa o campo "identificador" se existir; caso contrário, usa o id
+              var identificador = (of.identificador !== undefined && of.identificador !== null) ? of.identificador : of.id;
+              
+              // Obtenha o número de vagas restantes do snapshot, se disponível
+              var vagasRestantes = (vagasMap[of.id] !== undefined) ? vagasMap[of.id] : 'N/A';
+              // Total de vagas conforme definido no arquivo mestre (campo "total_vagas"); se não existir, exibe "N/A"
+              var vagasTotais = (of.total_vagas !== undefined) ? of.total_vagas : 'N/A';
+              
+              // Define o estilo da borda conforme as vagas restantes: verde se > 0; vermelha se 0; padrão caso contrário
+              var borderStyle = "";
+              if (typeof vagasRestantes === "number") {
+                  if (vagasRestantes > 0) {
+                      borderStyle = "border: 3px solid green;";
+                  } else {
+                      borderStyle = "border: 3px solid red;";
+                  }
+              } else {
+                  borderStyle = "border: 1px solid #ddd;";
+              }
+              
+              html += '<div class="oficina-item" style="' + borderStyle + '">';
+              html += '<strong> ' + of.descricao + '</strong><br>';
+              html += 'Horário: ' + of.horas + '<br>';
+              if (of.escola) {
+                  html += 'Escola: ' + of.escola + '<br>';
+              }
+              if (of.endereco) {
+                  html += 'Endereço: ' + of.endereco + '<br>';
+              }
+              html += 'Vagas Totais: ' + vagasTotais + ' | Vagas Restantes: ' + vagasRestantes + '<br>';
+              html += 'Identificador: ' + identificador + '<br>';
+              html += '</div>';
           });
           container.innerHTML = html;
-        })
-        .catch(error => {
+      })
+      .catch(function(error) {
           console.error(error);
           container.innerHTML = '<p style="color:red;">Erro ao carregar oficinas.</p>';
-        });
+      });
     }
   </script>
 </head>
@@ -112,7 +158,12 @@ $areas   = include 'areas.php';
     <div id="oficinasContainer">
       <!-- As oficinas serão carregadas aqui via AJAX -->
     </div>
-    <a class="btn" href="index.php">Voltar ao Início</a>
+    <div class="totals">
+      Total de Inscrições: <?php echo $totalRegistrations; ?> | 
+      Total de Vagas: <?php echo $totalVagasTotais; ?> | 
+      Vagas Preenchidas: <?php echo $totalRegistrations; ?> | 
+      Vagas Restantes: <?php echo $totalVagasRestantes; ?>
+    </div>
   </div>
 </body>
 </html>

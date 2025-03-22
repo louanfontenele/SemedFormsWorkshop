@@ -38,8 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telefone = trim($_POST['telefone'] ?? '');
     $escola = mb_convert_case(trim($_POST['escola'] ?? ''), MB_CASE_TITLE, "UTF-8");
     $area_atuacao = trim($_POST['area_atuacao'] ?? '');
+
     // Se o campo oficina não for enviado ou estiver vazio, mantém a oficina antiga
-    $nova_oficina_id = isset($_POST['oficina']) && !empty($_POST['oficina']) ? trim($_POST['oficina']) : $old_oficina_id;
+    $nova_oficina_id = isset($_POST['oficina']) && !empty($_POST['oficina'])
+        ? trim($_POST['oficina'])
+        : $old_oficina_id;
 
     try {
         $db->beginTransaction();
@@ -62,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // Atualiza a inscrição (sem o campo "formação")
+        // Atualiza a inscrição (sem 'formacao')
         $stmtUp = $db->prepare("
             UPDATE registrations
                SET nome         = :nome,
@@ -72,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                    escola       = :escola,
                    area_atuacao = :area_atuacao,
                    oficina      = :oficina
-             WHERE id = :id
+             WHERE id           = :id
         ");
         $okUp = $stmtUp->execute([
             ':nome'         => $nome,
@@ -114,13 +117,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/awesomplete@1.1.5/awesomplete.css">
   <script src="https://cdn.jsdelivr.net/npm/awesomplete@1.1.5/awesomplete.min.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
-    .container { max-width: 800px; margin: 20px auto; background: #fff; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    input, select, button { width: 100%; padding: 10px; margin: 5px 0; box-sizing: border-box; }
-    label { margin-top: 10px; display: block; }
-    .buttons { margin-top: 10px; display: flex; justify-content: space-between; }
-    #oficinasContainer .oficina-option { border: 1px solid #ddd; padding: 8px; border-radius: 5px; margin-bottom: 5px; word-wrap: break-word; }
-    #oficinasContainer input[type="radio"] { margin-right: 8px; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      box-sizing: border-box;
+    }
+    label {
+      margin-top: 10px;
+      display: block;
+    }
+    .buttons {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Estilo para a lista de oficinas usando radio com quebra de linha completa */
+    #oficinasContainer .oficina-option {
+      border: 1px solid #ddd;
+      padding: 8px;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      /* permite a quebra total */
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
+    }
+    #oficinasContainer .oficina-option label {
+      display: block;
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+    #oficinasContainer input[type="radio"] {
+      margin-right: 8px;
+      vertical-align: middle;
+    }
   </style>
 </head>
 <body>
@@ -131,31 +176,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($registration['nome']); ?>" required>
     
     <label for="cpf">CPF:</label>
-    <input type="text" id="cpf" name="cpf" value="<?php echo htmlspecialchars($registration['cpf']); ?>" required oninput="this.value = formatCPF(this.value)">
+    <input type="text" id="cpf" name="cpf"
+           value="<?php echo htmlspecialchars($registration['cpf']); ?>"
+           required
+           oninput="this.value = formatCPF(this.value)">
     
     <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($registration['email']); ?>" required>
+    <input type="email" id="email" name="email"
+           value="<?php echo htmlspecialchars($registration['email']); ?>"
+           required>
     
     <label for="telefone">Telefone:</label>
-    <input type="text" id="telefone" name="telefone" value="<?php echo htmlspecialchars($registration['telefone']); ?>" required oninput="this.value = formatPhone(this.value)">
+    <input type="text" id="telefone" name="telefone"
+           value="<?php echo htmlspecialchars($registration['telefone']); ?>"
+           required
+           oninput="this.value = formatPhone(this.value)">
     
     <label for="escola">Escola de Atuação:</label>
-    <input class="awesomplete" id="escola" name="escola" value="<?php echo htmlspecialchars($registration['escola']); ?>" required data-minchars="0" data-autofirst="true">
+    <input class="awesomplete" id="escola" name="escola"
+           value="<?php echo htmlspecialchars($registration['escola']); ?>"
+           required data-minchars="0" data-autofirst="true">
     
     <label for="area_atuacao">Área de Atuação:</label>
     <select id="area_atuacao" name="area_atuacao" required onchange="loadOficinasAdmin()">
       <option value="">Selecione...</option>
       <?php foreach ($areas as $area): ?>
-        <option value="<?php echo htmlspecialchars($area); ?>" <?php if ($registration['area_atuacao'] == $area) echo 'selected'; ?>>
+        <option value="<?php echo htmlspecialchars($area); ?>"
+          <?php if ($registration['area_atuacao'] == $area) echo 'selected'; ?>>
           <?php echo htmlspecialchars($area); ?>
         </option>
       <?php endforeach; ?>
     </select>
-    
+
     <br>
     <h4>Oficina</h4>
     <div id="oficinasContainer">
-      <!-- As oficinas serão carregadas via AJAX aqui -->
+      <!-- As oficinas serão carregadas via AJAX como radio buttons -->
     </div>
     
     <div class="buttons">
@@ -181,7 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       awEscola.evaluate();
     });
     
-    // Carrega as oficinas correspondentes à área atual ao iniciar
+    // Carrega as oficinas correspondentes à área atual
     loadOficinasAdmin();
   });
   
@@ -215,42 +271,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     return v;
   }
   
-  // Carrega as oficinas via AJAX com base na área de atuação
+  // Carrega as oficinas via AJAX e exibe-as como radio buttons
   function loadOficinasAdmin() {
     const areaVal = document.getElementById('area_atuacao').value;
     const container = document.getElementById('oficinasContainer');
     container.innerHTML = '';
-  
+
     if (!areaVal) {
       container.innerHTML = '<p>Selecione uma área de atuação para ver as oficinas.</p>';
       return;
     }
-  
+
     container.innerHTML = '<p>Carregando oficinas...</p>';
     fetch('get_oficinas.php?area=' + encodeURIComponent(areaVal))
-      .then(r => r.json())
+      .then(response => response.json())
       .then(data => {
         if (!data || data.length === 0) {
           container.innerHTML = '<p>Nenhuma oficina disponível para essa área.</p>';
           return;
         }
-  
+
         // Obtém o ID da oficina atual do registro
         const currentOficinaId = '<?php echo $registration['oficina']; ?>';
         let html = '';
-  
+
         data.forEach(of => {
-          // Define a descrição completa com quebra de linha automática
+          // Concatena a descrição completa da oficina (certifique-se de que a coluna 'descricao' no BD não esteja truncada)
           const descCompleta = of.descricao + ' - ' + of.vagas + ' vagas - ' + of.horas;
-          // Se a oficina é a atual, marca como selecionada (mesmo que as vagas estejam esgotadas)
+          // Marca como selecionado se for a atual
           const checked = (of.id == currentOficinaId) ? 'checked' : '';
-          // Se a oficina estiver desabilitada e não for a atual, desabilita o input
+          // Se a oficina estiver sem vagas e não for a atual, desabilita
           const disabled = (of.vagas <= 0 && of.id != currentOficinaId) ? 'disabled' : '';
-  
+
           html += `
             <div class="oficina-option">
               <input type="radio" name="oficina" id="of_${of.id}" value="${of.id}" ${checked} ${disabled} required>
-              <label for="of_${of.id}" style="white-space: normal;" title="${descCompleta}">
+              <label for="of_${of.id}" 
+                     style="white-space: normal; display: block; word-wrap: break-word; overflow-wrap: break-word;"
+                     title="${descCompleta}">
                 ${descCompleta}
               </label>
             </div>
